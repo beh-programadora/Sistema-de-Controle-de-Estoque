@@ -1,0 +1,47 @@
+
+### .gitignore
+
+```plaintext
+# Ignorar arquivos de banco de dados
+*.sql
+
+# Ignorar arquivos de configuração temporários
+*.log
+*.tmp
+
+# Ignorar arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# Ignorar pastas temporárias
+node_modules/
+.env
+Enunciado do Projeto
+Título: Sistema de Controle de Estoque
+
+Descrição:
+
+Você foi contratado por uma empresa para desenvolver um Sistema de Controle de Estoque que permitirá gerenciar produtos, fornecedores e pedidos de reposição de maneira eficiente. O sistema deverá armazenar informações sobre os produtos disponíveis em estoque, os fornecedores que os fornecem e os pedidos de reposição que são realizados para manter o estoque adequado.
+
+Requisitos:
+
+Criar o Banco de Dados:
+
+Nome: SistemaControleEstoque
+Criar as Tabelas:
+
+Fornecedores: Contém informações sobre fornecedores.
+Produtos: Armazena informações sobre produtos e seus fornecedores.
+PedidosReposicao: Registra pedidos de reposição para produtos.
+Inserir Dados:
+
+Adicionar informações relevantes nas tabelas de fornecedores, produtos e pedidos de reposição.
+Consultar Dados:
+
+Consultar produtos em estoque, pedidos de reposição realizados e informações sobre fornecedores.
+Atualizar Dados:
+
+Atualizar a quantidade de produtos em estoque após pedidos de reposição.
+Deletar Dados:
+
+Excluir produtos descontinuados e fornecedores que não fornecem mais produtos.
