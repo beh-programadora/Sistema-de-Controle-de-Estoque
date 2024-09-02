@@ -1,0 +1,85 @@
+-- Passo 1: Criar o Banco de Dados
+DROP DATABASE IF EXISTS SistemaControleEstoque;
+CREATE DATABASE SistemaControleEstoque;
+USE SistemaControleEstoque;
+
+-- Passo 2: Criar as Tabelas
+
+-- Tabela de Fornecedores
+CREATE TABLE Fornecedores (
+    id_fornecedor INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    contato VARCHAR(100),
+    telefone VARCHAR(20)
+);
+
+-- Tabela de Produtos
+CREATE TABLE Produtos (
+    id_produto INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    preco DECIMAL(10,2) NOT NULL,
+    quantidade_estoque INT NOT NULL,
+    id_fornecedor INT,
+    FOREIGN KEY (id_fornecedor) REFERENCES Fornecedores(id_fornecedor) ON DELETE SET NULL
+);
+
+-- Tabela de Pedidos de Reposição
+CREATE TABLE PedidosReposicao (
+    id_pedido INT AUTO_INCREMENT PRIMARY KEY,
+    id_produto INT,
+    quantidade INT NOT NULL,
+    data_pedido DATE NOT NULL,
+    FOREIGN KEY (id_produto) REFERENCES Produtos(id_produto) ON DELETE CASCADE
+);
+
+-- Passo 3: Inserir Dados
+
+-- Inserir dados na tabela Fornecedores
+INSERT INTO Fornecedores (nome, contato, telefone) VALUES
+('Fornecedor A', 'João Silva', '(11) 12345-6789'),
+('Fornecedor B', 'Maria Oliveira', '(21) 98765-4321'),
+('Fornecedor C', 'Carlos Santos', '(31) 23456-7890');
+
+-- Inserir dados na tabela Produtos
+INSERT INTO Produtos (nome, preco, quantidade_estoque, id_fornecedor) VALUES
+('Produto X', 25.00, 100, 1),
+('Produto Y', 50.00, 150, 2),
+('Produto Z', 30.00, 200, 3);
+
+-- Inserir dados na tabela PedidosReposicao
+INSERT INTO PedidosReposicao (id_produto, quantidade, data_pedido) VALUES
+(1, 20, '2024-08-15'),
+(2, 30, '2024-08-20'),
+(3, 10, '2024-08-25'),
+(1, 15, '2024-08-30');
+
+-- Passo 4: Consultas e Relatórios
+
+-- Consulta 1: Mostrar todos os produtos em estoque
+SELECT * FROM Produtos;
+
+-- Consulta 2: Mostrar todos os pedidos de reposição realizados
+SELECT PedidosReposicao.id_pedido, Produtos.nome AS Produto, PedidosReposicao.quantidade, PedidosReposicao.data_pedido
+FROM PedidosReposicao
+JOIN Produtos ON PedidosReposicao.id_produto = Produtos.id_produto;
+
+-- Consulta 3: Mostrar informações sobre os fornecedores e os produtos fornecidos por eles
+SELECT Fornecedores.nome AS Fornecedor, Produtos.nome AS Produto, Produtos.preco, Produtos.quantidade_estoque
+FROM Produtos
+JOIN Fornecedores ON Produtos.id_fornecedor = Fornecedores.id_fornecedor;
+
+-- Passo 5: Atualização e Deleção de Dados
+
+-- Atualizar a quantidade de produtos em estoque após receber um novo pedido de reposição
+-- Exemplo para atualizar o produto com id_produto = 1 após um pedido de 20 unidades
+UPDATE Produtos
+SET quantidade_estoque = quantidade_estoque + 20
+WHERE id_produto = 1;
+
+-- Deletar um produto descontinuado
+-- Exemplo para deletar o produto com id_produto = 3
+DELETE FROM Produtos WHERE id_produto = 3;
+
+-- Deletar um fornecedor que não fornece mais produtos
+-- Exemplo para deletar o fornecedor com id_fornecedor = 3
+DELETE FROM Fornecedores WHERE id_fornecedor = 3;
